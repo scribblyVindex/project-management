@@ -6,12 +6,11 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
-export const projectQueryRouter = createTRPCRouter({
-  getProjectDetails: protectedProcedure
+export const taskQueryRouter = createTRPCRouter({
+  getTaskDetails: protectedProcedure
     .input(
       z.object({
-        id: z.string().min(1),
-        allDetails: z.boolean(),
+        id: z.number(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -21,16 +20,17 @@ export const projectQueryRouter = createTRPCRouter({
 
       if (allDetails) {
         include = {
-          admins: true,
-          members: true,
-          createdBy: true,
-          tasks: true,
+          assignees: true,
+          creator: true,
         };
       }
 
-      let projectDetails = await ctx.db.project.findUnique({
+      let projectDetails = await ctx.db.task.findUnique({
         where: { id },
-        include,
+        include: {
+          assignees: true,
+          creator: true,
+        },
       });
 
       return projectDetails;
