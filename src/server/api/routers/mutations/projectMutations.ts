@@ -29,6 +29,7 @@ export const projectMutationRouter = createTRPCRouter({
         description,
         createdBy: { connect: { id: userId } },
         admins: { connect: { id: userId } },
+        members: { connect: { id: userId } },
         taskTypes: defaultTaskTypes,
         status: defaultStatus,
         priority: defaultPriorities,
