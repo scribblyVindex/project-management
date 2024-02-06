@@ -40,7 +40,14 @@ interface CreateContextOptions {
  */
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
-    session: opts.session,
+    // session: opts.session,
+    session: {
+      expires: "1",
+      user: {
+        id: "clgb17vnp000008jjere5g15i",
+        username: "some_name",
+      },
+    },
     db,
   };
 };

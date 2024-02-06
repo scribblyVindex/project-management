@@ -1,11 +1,16 @@
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 import Navbar from "~/components/Navbar";
 
 import { api } from "~/utils/api";
 
 export default function Home() {
-  const hello = api.post.hello.useQuery({ text: "from tRPC" });
+  const [state, setState] = useState(api.post.getAll.useQuery());
+
+  console.log(state);
+  // useEffect(() => {
+  // }, [state]);
 
   return (
     <>

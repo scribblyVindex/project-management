@@ -54,18 +54,21 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    posts         Post[]
-    projects      Project[] @relation(name: "projectMemberAccess")
-    projectAdmin  Project[] @relation(name: "projectAdminAccess")
-    tasksAssigned Task[]    @relation(name: "tasksAssigned")
-    tasksReported Task[]    @relation(name: "tasksCreated")
+    id              String    @id @default(cuid())
+    name            String?
+    email           String?   @unique
+    emailVerified   DateTime?
+    image           String?
+    accounts        Account[]
+    sessions        Session[]
+    posts           Post[]
+    projects        Project[] @relation(name: "projectMemberAccess")
+    projectAdmin    Project[] @relation(name: "projectAdminAccess")
+    projectsCreated Project[] @relation("projectsCreated")
+    tasksAssigned   Task[]    @relation(name: "tasksAssigned")
+    tasksReported   Task[]    @relation(name: "tasksCreated")
+    createdAt       DateTime  @default(now())
+    updatedAt       DateTime?
 }
 
 model VerificationToken {
@@ -88,27 +91,31 @@ model Task {
     dueDate     DateTime?
     tags        String[]
     status      String    @default("todo")
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime?
 }
 
 // model Organisation { 
 //     id                  String   @id @default(cuid())
 //     name                String
-//     email               String
+//     email               String?
+//     emailVerified       DateTime?
 
 // }
 
 model Project {
-    id            String    @id @unique @default(cuid())
-    name          String?
-    email         String?
-    emailVerified DateTime?
-    image         String?
-    description   String?
-    adminAccess   User[]    @relation(name: "projectAdminAccess")
-    memberAccess  User[]    @relation(name: "projectMemberAccess")
-    prefix        String
-    tags          String[]
-    status        String[]
-    priority      String[]
-    invitations   String[]
+    id          String    @id @unique @default(cuid())
+    name        String
+    description String?
+    admins      User[]    @relation(name: "projectAdminAccess")
+    members     User[]    @relation(name: "projectMemberAccess")
+    prefix      String
+    tags        String[]
+    status      String[]
+    priority    String[]
+    invitations String[]
+    createdBy   User      @relation(name: "projectsCreated", fields: [creatorId], references: id)
+    creatorId   String
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime?
 }
