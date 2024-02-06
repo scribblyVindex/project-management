@@ -1,6 +1,6 @@
 import { createTRPCRouter } from "~/server/api/trpc";
-import { mutationRouter } from "./routers/mutations";
-import { queryRouter } from "./routers/queries";
+import { mutationRouter } from "./routers/mutations/projectMutations";
+import { queryRouter } from "./routers/queries/projectQueries";
 
 /**
  * This is the primary router for your server.

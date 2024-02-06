@@ -44,8 +44,9 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
     session: {
       expires: "1",
       user: {
-        id: "clgb17vnp000008jjere5g15i",
-        username: "some_name",
+        id: "id_unique_1",
+        name: "aditya",
+        email: "aditya@email.com",
       },
     },
     db,
