@@ -91,6 +91,8 @@ model Task {
     dueDate     DateTime?
     tags        String[]
     status      String    @default("todo")
+    project     Project   @relation(name: "taskOfProject", fields: [projectId], references: [id], onDelete: Cascade)
+    projectId   String
     createdAt   DateTime  @default(now())
     updatedAt   DateTime?
 }
@@ -114,8 +116,10 @@ model Project {
     status      String[]
     priority    String[]
     invitations String[]
+    taskTypes   String[]
     createdBy   User      @relation(name: "projectsCreated", fields: [creatorId], references: id)
     creatorId   String
+    tasks       Task[]    @relation(name: "taskOfProject")
     createdAt   DateTime  @default(now())
     updatedAt   DateTime?
 }

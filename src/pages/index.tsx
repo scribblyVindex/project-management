@@ -8,7 +8,7 @@ import { api } from "~/utils/api";
 export default function Home() {
   const [state, setState] = useState();
 
-  const { mutate } = api.mutations.updateProject.useMutation();
+  const { mutate } = api.taskMutations.updateTask.useMutation();
 
   return (
     <>
@@ -16,14 +16,9 @@ export default function Home() {
       <button
         onClick={() =>
           mutate({
-            id: "project_1_id",
-            name: "Project1",
-            prefix: "P1",
-            admins: ["id_unique_2"],
-            members: ["id_unique_3"],
-            tag: "custom_tag",
-            status: "custom_status",
-            priority: "custom_priority",
+            id: 1,
+            title: "task1_project1_renamed",
+            type: "bug",
           })
         }
       >

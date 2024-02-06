@@ -1,20 +1,22 @@
 import { z } from "zod";
-import { VerificationToken, User } from "typeDefinitions/mutationTypes";
 
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { defaultPriorities, defaultStatus, defaultTags } from "data/constants";
+import {
+  defaultPriorities,
+  defaultStatus,
+  defaultTaskTypes,
+} from "data/constants";
 
-export const mutationRouter = createTRPCRouter({
+export const projectMutationRouter = createTRPCRouter({
   addProject: protectedProcedure
     .input(
       z.object({
         name: z.string().min(1),
         description: z.optional(z.string()),
-        // admins: z.optional(z.array(z.number())),
         prefix: z.string().min(1),
       }),
     )
@@ -26,18 +28,19 @@ export const mutationRouter = createTRPCRouter({
         prefix,
         description,
         createdBy: { connect: { id: userId } },
-        tags: defaultTags,
+        admins: { connect: { id: userId } },
+        taskTypes: defaultTaskTypes,
         status: defaultStatus,
         priority: defaultPriorities,
       };
       try {
-        const project = ctx.db.project.create({
+        const project = await ctx.db.project.create({
           data: createObj,
         });
 
         return project;
       } catch (err) {
-        console.log("ERROR", err);
+        return err;
       }
     }),
 
@@ -49,6 +52,7 @@ export const mutationRouter = createTRPCRouter({
         description: z.optional(z.string()),
         admins: z.optional(z.array(z.string())),
         members: z.optional(z.array(z.string())),
+        taskType: z.optional(z.string().min(1)),
         tag: z.optional(z.string().min(1)),
         status: z.optional(z.string().min(1)),
         priority: z.optional(z.string().min(1)),
@@ -68,7 +72,23 @@ export const mutationRouter = createTRPCRouter({
         status,
         priority,
         invitation,
+        taskType,
       } = input;
+
+      const projectDetails = await ctx.db.project.findUnique({
+        where: { id },
+        include: {
+          admins: true,
+        },
+      });
+
+      let projectAdmins = (projectDetails?.admins || []).map(
+        (admin: any) => admin.id,
+      );
+      const userId = ctx.session.user.id;
+
+      if (!projectAdmins.includes(userId)) throw new Error("Unauthorized");
+
       let updateObj = {
         name,
         prefix,
@@ -80,19 +100,26 @@ export const mutationRouter = createTRPCRouter({
         updateObj["members"] = {
           connect: members.map((id: string) => ({ id })),
         };
-      if (tag) updateObj["tags"] = { push: tag };
-      if (status) updateObj["status"] = { push: status };
-      if (priority) updateObj["priority"] = { push: priority };
-      if (invitation) updateObj["invitations"] = { push: invitation };
+      if (taskType && !projectDetails.taskTypes.includes(taskType))
+        updateObj["taskTypes"] = { push: taskType };
+      if (tag && !projectDetails.tags.includes(tag))
+        updateObj["tags"] = { push: tag };
+      if (status && !projectDetails.status.includes(status))
+        updateObj["status"] = { push: status };
+      if (priority && !projectDetails.priority.includes(priority))
+        updateObj["priority"] = { push: priority };
+      if (invitation && !projectDetails.invitations.includes(invitation))
+        updateObj["invitations"] = { push: invitation };
+      updateObj.updatedAt = new Date();
       try {
-        const project = ctx.db.project.update({
+        const project = await ctx.db.project.update({
           data: updateObj,
           where: { id },
         });
 
         return project;
       } catch (err) {
-        console.log("ERROR", err);
+        return err;
       }
     }),
 });
