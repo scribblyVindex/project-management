@@ -4,18 +4,14 @@ import Link from "node_modules/next/link";
 import { useEffect, useState } from "react";
 
 import Navbar from "~/components/Navbar";
+import { useProject } from "~/hooks/project";
 
 import { api } from "~/utils/api";
 
 export default function Home() {
-  const [state, setState] = useState();
-
   const { data: session } = useSession();
-
-  useEffect(() => {
-    console.log("session");
-    console.log(session);
-  }, [session]);
+  const { projectId, projectDetails, isLoading, isSuccess, isError } =
+    useProject();
 
   return (
     <>
