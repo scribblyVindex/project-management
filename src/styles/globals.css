@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* color1= #7c3aed;
-#6b7380
-#4237c8
-#4e45e5
-#f2f4f7
-#010001 */
+/* color1= 
+purple:#7c3aed; //text headings
+grey:#6b7380
+dark-purple:#4237c8 // on hover on buttons
+light-purple:#4e45e5 // normal texts, outlines/fills of icons
+white:#f2f4f7
+black:#010001 */

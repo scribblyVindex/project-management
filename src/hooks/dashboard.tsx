@@ -1,4 +1,3 @@
-import { CURR_PROJECT_ID } from "data/constants";
 import React, { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 
