@@ -4,10 +4,10 @@ import DropDown from "./DropDown";
 const Navbar = () => {
   return (
     <>
-      <div className="sticky top-0 z-10  place-items-center">
+      <div className="sticky z-10 h-[6vh] place-items-center border border-black bg-black  shadow-lg">
         <section className="relative mx-auto">
-          <nav className="flex w-screen justify-between bg-white text-white shadow-md">
-            <div className="flex w-auto justify-between  space-x-16 px-5 py-6 xl:px-8">
+          <nav className="flex w-full justify-between bg-white text-white ">
+            <div className="flex w-auto justify-between  space-x-16 px-5 py-3 xl:px-8">
               <a
                 className="font-heading text-purple1  border-black text-3xl font-bold"
                 href="#"
@@ -38,22 +38,6 @@ const Navbar = () => {
               >
                 {"PROFILE"}
               </button>
-              {/* <a className="flex items-center hover:text-gray-200" href="#">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 hover:text-gray-200"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </a> */}
             </div>
           </nav>
         </section>

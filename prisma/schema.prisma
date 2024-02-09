@@ -67,7 +67,8 @@ model VerificationToken {
 }
 
 model Task {
-    id          Int       @id @default(autoincrement())
+    id          String    @id @unique @default(cuid())
+    relativeId  String
     title       String
     description String?
     type        String

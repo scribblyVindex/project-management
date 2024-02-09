@@ -1,16 +1,10 @@
-import { usePathname, useRouter } from "node_modules/next/navigation";
-import React, { useEffect, useState } from "react";
-import Layout from "~/components/Layout";
-import Modal from "~/components/Modal";
-import { useDashboard } from "~/hooks/dashboard";
+import React, { useState } from "react";
+import Modal from "./Modal";
 
-const Dashboard = () => {
-  const router = useRouter();
-
+const ProjectModal = () => {
   const [open, setOpen] = useState(false);
-
   return (
-    <>
+    <div>
       <button
         onClick={() => {
           console.log("open");
@@ -19,9 +13,6 @@ const Dashboard = () => {
       >
         OPEN MODAL
       </button>
-
-      {/* <div className="h-[50vh] w-[50vh] bg-red-400"></div> */}
-
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className="h-[500px] w-[500px] text-center">
           <div className="mx-auto my-4 w-48">
@@ -41,8 +32,8 @@ const Dashboard = () => {
           </div>
         </div>
       </Modal>
-    </>
+    </div>
   );
 };
 
-export default Dashboard;
+export default ProjectModal;

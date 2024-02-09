@@ -1,24 +1,21 @@
+import { usePathname } from "node_modules/next/navigation";
 import React from "react";
 import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 const Layout = (props) => {
+  const pathname = usePathname();
   return (
-    <div className="relative h-auto">
-      <Navbar />
-      {props.children}
-      <div className="sticky bottom-0 right-0 z-10 mb-4 mr-4">
-        <div>
-          <a
-            title="Follow me on twitter"
-            href="https://www.twitter.com/asad_codes"
-            target="_blank"
-            className="block h-16 w-16 transform rounded-full shadow transition-all hover:rotate-12 hover:scale-110 hover:shadow-lg"
-          >
-            <img
-              className="h-full w-full rounded-full object-cover object-center"
-              src="https://www.imore.com/sites/imore.com/files/styles/large/public/field/image/2019/12/twitter-logo.jpg"
-            />
-          </a>
+    <div className=" h-screen grid-rows-12 bg-transparent">
+      <div className=" bg-transparent ">
+        <Navbar />
+      </div>
+
+      <div className=" flex h-[93vh]">
+        {pathname.includes("project") && <Sidebar />}
+
+        <div className="h-full w-full overflow-scroll bg-transparent">
+          {props.children}
         </div>
       </div>
     </div>

@@ -34,9 +34,29 @@ export const taskMutationRouter = createTRPCRouter({
         tags,
         status,
       } = input;
+
+      const projectDetails = await ctx.db.project.findUnique({
+        where: { id: projectId },
+        select: {
+          prefix: true,
+          _count: {
+            select: {
+              tasks: true,
+            },
+          },
+        },
+      });
+
+      let relativeId = (
+        projectDetails.prefix +
+        "-" +
+        (projectDetails._count.tasks + 1)
+      ).toUpperCase();
+
       const userId = ctx.session.user.id;
       let createObj = {
         project: { connect: { id: projectId } },
+        relativeId,
         title,
         type,
         description,

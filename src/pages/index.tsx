@@ -9,25 +9,35 @@ import { useProject } from "~/hooks/project";
 
 import { api } from "~/utils/api";
 import Layout from "~/components/Layout";
-
+import ProjectModal from "~/components/ProjectModal";
+import { useTask } from "~/hooks/task";
+import Avatar from "~/components/Avatar";
+import MultipleAvatars from "~/components/MultipleAvatars";
+// 576aa3a8dc
 export default function Home() {
   const editorRef = useRef(null);
-  const [text, setText] = useState();
-  const log = () => {
-    if (editorRef.current) {
-      console.log(typeof editorRef.current.getContent());
-    }
-  };
+  const session = useSession();
+
+  // const { addUpdateTaskDetails, data } = useTask({});
+
+  // let updateObj = {
+  //   projectId: "project_1",
+  //   title: "test task 1 for project 1",
+  //   type: "bug",
+  // };
+
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
 
   return (
     <>
-      {/* <Navbar /> */}
-      {/* <button onClick={() => query()}>ACTIVATE SHIT</button> */}
-      <Layout>
-        <div className="bg-grey h-screen">KAJSDHBFHJSBFDS</div>
-        <div className="bg-grey h-auto">sdds</div>
-        <div className="bg-grey h-auto">1233123</div>
-      </Layout>
+      {/* <ProjectModal /> */}
+      {/* <button onClick={() => addUpdateTaskDetails(updateObj)}>
+        ADD TASK HEREEEEE
+      </button> */}
+
+      {/* <Link href={"/project"}>TO PROJECT</Link> */}
 
       {/* <Editor
             apiKey="yivzkn19wx3bgafhotfwnn0w1o626yudu2d29gqjk3l9okxv"
@@ -68,8 +78,11 @@ export default function Home() {
                 "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
             }}
           /> */}
+      <div className="">
+        <MultipleAvatars />
+      </div>
 
-      {/* <AuthShowcase /> */}
+      <AuthShowcase />
     </>
   );
 }
