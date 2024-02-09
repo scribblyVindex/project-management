@@ -35,4 +35,22 @@ export const projectQueryRouter = createTRPCRouter({
 
       return projectDetails;
     }),
+  getAllProjects: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+
+    let userDetails = await ctx.db.user.findUnique({
+      where: {
+        id: userId,
+      },
+      include: {
+        projects: true,
+      },
+    });
+
+    console.log(userDetails);
+
+    const allProjects = userDetails.projects;
+
+    return allProjects;
+  }),
 });

@@ -13,7 +13,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <Layout>
+      <Layout className="overscroll-none">
         <Component {...pageProps} />
       </Layout>
     </SessionProvider>

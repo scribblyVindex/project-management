@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* color1= 
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Mukta&family=Roboto&display=swap"); /* color1= 
 
 purple:#7c3aed; //text headings
 grey:#6b7380
@@ -10,6 +10,6 @@ dark-purple:#4237c8 // on hover on buttons
 light-purple:#4e45e5 // normal texts, outlines/fills of icons
 white:#f2f4f7
 black:#010001 */
-body {
+/* body {
   overscroll-behavior: none;
-}
+} */

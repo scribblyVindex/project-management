@@ -2,14 +2,22 @@ import { CURR_PROJECT_ID } from "data/constants";
 import React, { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 
-export const useProject = ({ fetch = true }) => {
+export const useProject = ({ fetch = true, fetchAll = false }) => {
   const [projectId, setProjectId] = useState<string>();
   const [projectDetails, setProjectDetails] = useState();
+  const [allProjects, setAllProjects] = useState([]);
 
   // if (typeof window !== "undefined") {
   //   localStorage.setItem(CURR_PROJECT_ID, "project_1");
   // }
 
+  // Fetching project details
+  const {
+    data: userProjects,
+    isLoading: fetchingAll,
+    isSuccess: fetchedAll,
+    error: fetchAllError,
+  } = api.projectQueries.getAllProjects.useQuery({ enabled: !!fetchAll });
   // Fetching project details
   const {
     data,
@@ -40,6 +48,11 @@ export const useProject = ({ fetch = true }) => {
       setProjectDetails(data);
     }
   }, [data]);
+  useEffect(() => {
+    if (userProjects) {
+      setAllProjects(userProjects);
+    }
+  }, [userProjects]);
 
   /// --------------------------------------------------------------------------------------------------------------------
 
@@ -56,6 +69,7 @@ export const useProject = ({ fetch = true }) => {
     error: updateError,
     isPending: updating,
     mutate: updateProject,
+    isSuccess: updateSuccess,
   } = api.projectMutations.updateProject.useMutation();
 
   const addUpdateProjectDetails = (update: any) => {
@@ -75,6 +89,11 @@ export const useProject = ({ fetch = true }) => {
     projectId,
     projectDetails,
 
+    allProjects,
+    fetchingAll,
+    fetchedAll,
+    fetchAllError,
+
     isLoading,
     isSuccess,
     fetchError,
@@ -83,5 +102,6 @@ export const useProject = ({ fetch = true }) => {
     error: updateError || createError,
     loading: creating || updating,
     data: createdData || updatedData,
+    updateSuccess,
   };
 };

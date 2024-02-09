@@ -17,6 +17,11 @@ export default {
         black2: "#010001",
       },
     },
+    fontFamily: {
+      lato: ["Lato", "sans-serif"],
+      roboto: ["Roboto", "sans-serif"],
+      mukta: ["Mukta", "sans-serif"],
+    },
   },
   plugins: [],
 } satisfies Config;

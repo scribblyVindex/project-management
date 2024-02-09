@@ -1,7 +1,15 @@
-import React from "react";
+import Link from "node_modules/next/link";
+import { useRouter } from "node_modules/next/router";
+import React, { useEffect, useState } from "react";
 import DropDown from "./DropDown";
 
-const Navbar = () => {
+const Navbar = ({ projectList }) => {
+  const [projects, setProjects] = useState([]);
+  const router = useRouter();
+  useEffect(() => {
+    if (projectList.length) setProjects(projectList);
+  }, [projectList]);
+
   return (
     <>
       <div className="sticky z-10 h-[6vh] place-items-center border border-black bg-black  shadow-lg">
@@ -26,7 +34,12 @@ const Navbar = () => {
                 <li>
                   <DropDown
                     title="Projects"
-                    onItemClick={(item: any) => console.log(item)}
+                    onItemClick={(item: any) => {
+                      router.push("/project?id=" + item);
+                    }}
+                    options={projects || []}
+                    labelKey="name"
+                    valueKey="id"
                   />
                 </li>
               </ul>

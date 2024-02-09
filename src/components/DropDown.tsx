@@ -3,6 +3,8 @@ import Foco from "react-foco";
 
 const DropDown = ({
   title = "Select Item",
+  labelKey = "label",
+  valueKey = "value",
   options = [
     { value: "option1", label: "Option 1983742983478239" },
     { value: "option2", label: "Option 2" },
@@ -47,21 +49,24 @@ const DropDown = ({
                 aria-orientation="vertical"
                 aria-labelledby="dropdown-button"
               >
-                {options.map(({ label, value }, index) =>
+                {options.map((details, index) =>
                   dropDownContent ? (
                     dropDownContent(
-                      label,
-                      value,
-                      (arg) => console.log(arg),
+                      details[labelKey],
+                      details[valueKey],
+                      onItemClick,
                       index,
                     )
                   ) : (
                     <button
-                      onClick={() => onItemClick(value)}
+                      onClick={() => {
+                        onItemClick(details[valueKey]);
+                        setOpen(false);
+                      }}
                       key={index}
                       className="mb-1 min-w-48 max-w-80   rounded-sm bg-white px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      {label}
+                      {details[labelKey]}
                     </button>
                   ),
                 )}

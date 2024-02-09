@@ -17,7 +17,8 @@ import TaskPriorityInput from "~/components/TaskPriorityInput";
 // 576aa3a8dc
 export default function Home() {
   const editorRef = useRef(null);
-  const session = useSession();
+
+  const { data: sessionData } = useSession();
 
   // const { addUpdateTaskDetails, data } = useTask({});
 
@@ -79,12 +80,20 @@ export default function Home() {
                 "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
             }}
           /> */}
-      <div className="">
-        {/* <UserSelectInput /> */}
-        <TaskPriorityInput />
-      </div>
+      <ProjectModal />
 
-      <AuthShowcase />
+      {/* <AuthShowcase /> */}
+      <div className="flex flex-col items-center justify-center gap-4">
+        <p className="text-center text-2xl text-white">
+          {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
+        </p>
+        <button
+          className="rounded-full bg-white/10 px-10 py-3 font-semibold text-black text-white no-underline transition hover:bg-white/20"
+          onClick={sessionData ? () => void signOut() : () => void signIn()}
+        >
+          {sessionData ? "Sign out" : "Sign in"}
+        </button>
+      </div>
     </>
   );
 }

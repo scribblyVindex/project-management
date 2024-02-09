@@ -1,16 +1,23 @@
 import { CURR_PROJECT_ID } from "data/constants";
-import { useRouter } from "node_modules/next/navigation";
+import {
+  useParams,
+  useRouter,
+  useSearchParams,
+} from "node_modules/next/navigation";
 import React, { useEffect } from "react";
 import Layout from "~/components/Layout";
 
 const Project = () => {
   const router = useRouter();
+  const params = useSearchParams();
+  console.log(params);
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(CURR_PROJECT_ID, "project_1");
+    if (typeof window !== "undefined" && params) {
+      const id = params.get("id");
+      localStorage.setItem(CURR_PROJECT_ID, id);
       router.replace("/project/list");
     }
-  }, []);
+  }, [params]);
 
   return <>Project</>;
 };

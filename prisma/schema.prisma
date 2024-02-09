@@ -87,7 +87,7 @@ model Task {
 }
 
 model Project {
-    id          String    @id @unique @default(cuid())
+    id          String    @id @default(cuid())
     name        String
     description String?
     admins      User[]    @relation(name: "projectAdminAccess")
@@ -103,4 +103,6 @@ model Project {
     tasks       Task[]    @relation(name: "taskOfProject")
     createdAt   DateTime  @default(now())
     updatedAt   DateTime?
+
+    @@unique([id, prefix], name: "projectIdentifier")
 }
