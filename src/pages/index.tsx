@@ -12,7 +12,8 @@ import Layout from "~/components/Layout";
 import ProjectModal from "~/components/ProjectModal";
 import { useTask } from "~/hooks/task";
 import Avatar from "~/components/Avatar";
-import MultipleAvatars from "~/components/MultipleAvatars";
+import UserSelectInput from "~/components/UserSelectInput";
+import TaskPriorityInput from "~/components/TaskPriorityInput";
 // 576aa3a8dc
 export default function Home() {
   const editorRef = useRef(null);
@@ -79,7 +80,8 @@ export default function Home() {
             }}
           /> */}
       <div className="">
-        <MultipleAvatars />
+        {/* <UserSelectInput /> */}
+        <TaskPriorityInput />
       </div>
 
       <AuthShowcase />

@@ -8,7 +8,7 @@ const Avatar = ({
     <img
       alt={alt}
       src={src}
-      className="relative inline-block h-full w-full cursor-pointer rounded-full object-cover object-center"
+      className="relative inline-block h-full w-full rounded-full object-cover object-center"
       data-popover-target="profile-menu"
     />
   );
