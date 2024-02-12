@@ -28,10 +28,17 @@ export const projectQueryRouter = createTRPCRouter({
         };
       }
 
-      let projectDetails = await ctx.db.project.findUnique({
-        where: { id },
-        include,
-      });
+      let projectDetails;
+      try {
+        projectDetails = await ctx.db.project.findUnique({
+          where: { id },
+          include,
+        });
+      } catch (error) {
+        console.log(error);
+        console.log("ERROR IS HERE");
+        console.log(id);
+      }
 
       return projectDetails;
     }),
@@ -43,11 +50,13 @@ export const projectQueryRouter = createTRPCRouter({
         id: userId,
       },
       include: {
-        projects: true,
+        projects: {
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
       },
     });
-
-    console.log(userDetails);
 
     const allProjects = userDetails.projects;
 

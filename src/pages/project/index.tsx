@@ -10,7 +10,6 @@ import Layout from "~/components/Layout";
 const Project = () => {
   const router = useRouter();
   const params = useSearchParams();
-  console.log(params);
   useEffect(() => {
     if (typeof window !== "undefined" && params) {
       const id = params.get("id");
@@ -19,7 +18,7 @@ const Project = () => {
     }
   }, [params]);
 
-  return <>Project</>;
+  return;
 };
 
 export default Project;

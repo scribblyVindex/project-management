@@ -15,7 +15,7 @@ export const taskMutationRouter = createTRPCRouter({
         title: z.string().min(1),
         description: z.optional(z.string()),
         type: z.string().min(1),
-        assignees: z.optional(z.array(z.string())),
+        assignee: z.optional(z.string()),
         priority: z.optional(z.string().min(1)),
         dueDate: z.optional(z.date()),
         tags: z.optional(z.array(z.string())),
@@ -28,7 +28,7 @@ export const taskMutationRouter = createTRPCRouter({
         title,
         description,
         type,
-        assignees,
+        assignee,
         priority,
         dueDate,
         tags,
@@ -63,9 +63,9 @@ export const taskMutationRouter = createTRPCRouter({
         creator: { connect: { id: userId } },
       };
 
-      if (assignees)
-        createObj.assignedTo = {
-          connect: assignees.map((userId) => ({ id: userId })),
+      if (assignee)
+        createObj.assignee = {
+          connect: { id: assignee },
         };
       if (priority) createObj.priority = priority;
       if (dueDate) createObj.dueDate = new Date(dueDate);
@@ -78,6 +78,8 @@ export const taskMutationRouter = createTRPCRouter({
 
         return task;
       } catch (err) {
+        console.log(err);
+        console.log("DUE DATE", new Date(dueDate));
         return err;
       }
     }),
@@ -85,11 +87,11 @@ export const taskMutationRouter = createTRPCRouter({
   updateTask: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string().min(1),
         title: z.optional(z.string().min(1)),
         description: z.optional(z.string()),
         type: z.string().min(1),
-        assignees: z.optional(z.array(z.string())),
+        assignee: z.optional(z.string()),
         priority: z.optional(z.string().min(1)),
         dueDate: z.optional(z.date()),
         tags: z.optional(z.array(z.string())),
@@ -102,7 +104,7 @@ export const taskMutationRouter = createTRPCRouter({
         title,
         description,
         type,
-        assignees,
+        assignee,
         priority,
         dueDate,
         tags,
@@ -116,9 +118,9 @@ export const taskMutationRouter = createTRPCRouter({
         creator: { connect: { id: userId } },
       };
 
-      if (assignees)
-        updateObj.assignedTo = {
-          connect: assignees.map((userId) => ({ id: userId })),
+      if (assignee)
+        updateObj.assignee = {
+          connect: { id: assignee },
         };
       if (priority) updateObj.priority = priority;
       if (dueDate) updateObj.dueDate = new Date(dueDate);

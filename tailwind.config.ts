@@ -5,8 +5,8 @@ export default {
   content: ["./src/**/*.tsx"],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+      rotate: {
+        "135": "135deg",
       },
       colors: {
         grey2: "#6b7380",
@@ -21,6 +21,7 @@ export default {
       lato: ["Lato", "sans-serif"],
       roboto: ["Roboto", "sans-serif"],
       mukta: ["Mukta", "sans-serif"],
+      poppins: ["Poppins", "sans-serif"],
     },
   },
   plugins: [],

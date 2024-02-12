@@ -10,7 +10,7 @@ export const taskQueryRouter = createTRPCRouter({
   getTaskDetails: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -20,7 +20,7 @@ export const taskQueryRouter = createTRPCRouter({
 
       if (allDetails) {
         include = {
-          assignees: true,
+          assignee: true,
           creator: true,
         };
       }
@@ -28,11 +28,42 @@ export const taskQueryRouter = createTRPCRouter({
       let projectDetails = await ctx.db.task.findUnique({
         where: { id },
         include: {
-          assignees: true,
+          assignee: true,
           creator: true,
         },
       });
 
       return projectDetails;
+    }),
+
+  getAllTasks: protectedProcedure
+    .input(
+      z.object({
+        projectId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      let { projectId } = input;
+
+      let allTasks = await ctx.db.task.findMany({
+        where: { project: { id: projectId } },
+        include: {
+          assignee: {
+            select: {
+              name: true,
+            },
+          },
+          creator: {
+            select: {
+              name: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      });
+
+      return allTasks;
     }),
 });

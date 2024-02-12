@@ -1,7 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "node_modules/next/head";
 import Link from "node_modules/next/link";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
 import Navbar from "~/components/Navbar";
@@ -12,11 +12,13 @@ import Layout from "~/components/Layout";
 import ProjectModal from "~/components/ProjectModal";
 import { useTask } from "~/hooks/task";
 import Avatar from "~/components/Avatar";
-import UserSelectInput from "~/components/UserSelectInput";
 import TaskPriorityInput from "~/components/TaskPriorityInput";
+import AppContext from "context/AppContext";
 // 576aa3a8dc
 export default function Home() {
   const editorRef = useRef(null);
+
+  const [text, setText] = useState();
 
   const { data: sessionData } = useSession();
 
@@ -41,46 +43,7 @@ export default function Home() {
 
       {/* <Link href={"/project"}>TO PROJECT</Link> */}
 
-      {/* <Editor
-            apiKey="yivzkn19wx3bgafhotfwnn0w1o626yudu2d29gqjk3l9okxv"
-            onInit={(evt, editor) => (editorRef.current = editor)}
-            initialValue=""
-            value={text}
-            onEditorChange={(e) => setText(e)}
-            init={{
-              height: 500,
-              menubar: false,
-              placeholder: "Please describe the task",
-              plugins: [
-                "advlist",
-                "autolink",
-                "lists",
-                "link",
-                "image",
-                "charmap",
-                "preview",
-                "anchor",
-                "searchreplace",
-                "visualblocks",
-                "code",
-                "fullscreen",
-                "insertdatetime",
-                "media",
-                "table",
-                "code",
-                "help",
-                "wordcount",
-              ],
-              toolbar:
-                "undo redo | blocks | " +
-                "bold italic forecolor | alignleft aligncenter " +
-                "alignright alignjustify | bullist numlist outdent indent | " +
-                "removeformat | help",
-              content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-            }}
-          /> */}
-      <ProjectModal />
+      {/* <ProjectModal /> */}
 
       {/* <AuthShowcase /> */}
       <div className="flex flex-col items-center justify-center gap-4">

@@ -1,6 +1,5 @@
-import AppContext from "context/AppContext";
-import { usePathname, useRouter } from "node_modules/next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import { useRouter } from "node_modules/next/navigation";
+import React, { useEffect, useState } from "react";
 import { useProject } from "~/hooks/project";
 import Modal from "./Modal";
 
@@ -10,18 +9,10 @@ const defaultValue = {
   prefix: "",
 };
 
-const ProjectModal = () => {
+const TaskModal = ({ buttonProps }) => {
   const [open, setOpen] = useState(false);
   const [projectDetails, setProjectDetails] = useState(defaultValue);
   const router = useRouter();
-  const context = useContext(AppContext);
-  const { setOpen: setToastOpen, setStatus } = context;
-
-  const pathname = usePathname();
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   const handleChange = (e) => {
     setProjectDetails({ ...projectDetails, [e.target.name]: e.target.value });
@@ -59,21 +50,11 @@ const ProjectModal = () => {
 
   useEffect(() => {
     if (data) {
-      const { id, ...otherDetails } = data;
-      router.push("/project?id=" + id);
       setProjectDetails(defaultValue);
       setOpen(false);
-      setToastOpen(true);
-      setStatus({ success: true, message: "Project created successfully" });
+      router.refresh();
     }
-    if (error) {
-      setOpen(false);
-      setToastOpen(true);
-      setStatus({
-        success: false,
-        message: "Project creation unsuccessful",
-      });
-    }
+    if (error) setOpen(false);
   }, [updateSuccess, data, error]);
 
   const staticData = {
@@ -83,13 +64,13 @@ const ProjectModal = () => {
   return (
     <div>
       <button
-        className="text-purple3 font-lato flex w-full items-center space-x-2  border-black px-4 py-2 text-left text-sm hover:bg-gray-100"
+        {...buttonProps}
+        className="text-purple3 font-lato w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
         onClick={() => {
           setOpen(!open);
         }}
       >
-        <p className="text-xl">+</p>
-        <p className="text-base">Create Project</p>
+        Create Task
       </button>
       <Modal
         open={open}
@@ -98,7 +79,7 @@ const ProjectModal = () => {
           setProjectDetails(defaultValue);
         }}
       >
-        <div className="m-4 flex h-[50vh] w-[30vw] flex-col items-start space-y-10 text-center">
+        <div className="flex h-[500px] w-[500px] flex-col items-start space-y-10 text-center">
           <h1 className="font-lato text-3xl font-semibold text-slate-600">
             Create Project
           </h1>
@@ -146,10 +127,7 @@ const ProjectModal = () => {
             <div className="flex  justify-between border-black">
               <button
                 disabled={loading}
-                onClick={() => {
-                  setOpen(false);
-                  setProjectDetails(defaultValue);
-                }}
+                onClick={handleSubmit}
                 className=" font-lato rounded border-black bg-slate-100 p-2 px-4 text-lg text-slate-600 transition-all  duration-200 hover:bg-slate-600 hover:text-white"
               >
                 {" "}
@@ -171,4 +149,4 @@ const ProjectModal = () => {
   );
 };
 
-export default ProjectModal;
+export default TaskModal;

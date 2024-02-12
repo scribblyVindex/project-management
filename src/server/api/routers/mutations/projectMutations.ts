@@ -8,6 +8,7 @@ import {
 import {
   defaultPriorities,
   defaultStatus,
+  defaultTags,
   defaultTaskTypes,
 } from "data/constants";
 
@@ -33,6 +34,7 @@ export const projectMutationRouter = createTRPCRouter({
         taskTypes: defaultTaskTypes,
         status: defaultStatus,
         priority: defaultPriorities,
+        tags: defaultTags,
       };
       try {
         const project = await ctx.db.project.create({

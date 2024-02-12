@@ -13,7 +13,6 @@ const Dashboard = () => {
     <>
       <button
         onClick={() => {
-          console.log("open");
           setOpen(!open);
         }}
       >

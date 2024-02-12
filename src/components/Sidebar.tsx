@@ -18,10 +18,10 @@ const Sidebar = ({ hidden = true }) => {
 
   return (
     <div
-      className={`${hidden ? "-translate-x-20" : "translate-x-0"} w-[250px] ${open ? "w-[220px]" : "w-[60px]"} bg-transparent transition-all duration-200 ease-in-out`}
+      className={`${hidden ? "-translate-x-56" : "translate-x-0"} w-[250px] ${open ? "w-[220px]" : "w-[60px]"} bg-transparent transition-all duration-200 ease-in-out`}
     >
       <div
-        className={` z-8 left-0 top-20 h-full overflow-hidden bg-white px-2 pt-24   transition-all ${open ? "w-[220px]" : "w-[60px]"} border border-r-2 border-gray-200 duration-200 ease-in-out`}
+        className={` z-15 left-0 top-20 h-full overflow-hidden  bg-white px-2  pt-24 transition-all ${open ? "w-[220px]" : "w-[60px]"} border border-r-2 border-gray-200 duration-200 ease-in-out`}
       >
         <button
           className={`absolute ${open ? "left-[200px]" : "left-[46px]"} top-10 transition-all duration-300  ease-in-out `}
@@ -41,7 +41,7 @@ const Sidebar = ({ hidden = true }) => {
               <li key={index}>
                 <Link
                   href={href}
-                  className={` ${isPage ? "bg-purple2 text-white" : "hover:bg-purple2 hover:text-white"} flex ${open ? "w-[200px]" : ""} text-purple2  items-center space-x-6 rounded p-2  transition-all duration-300 `}
+                  className={` ${isPage ? "bg-purple2 text-white" : "hover:bg-purple2 hover:text-white"} flex ${open ? "w-[200px]" : ""} text-baseline  items-center space-x-6 rounded p-2  font-roboto text-purple2 transition-all duration-300`}
                 >
                   {pathname.includes(href) ? activeIcon : icon}
                   {open && <p>{label}</p>}
